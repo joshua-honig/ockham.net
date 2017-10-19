@@ -1,2 +1,3 @@
-# ockham.net.core
-Core utilities: Data conversion, stream manipulations
+# ockham.net
+The simplest solution to basic .Net needs
+
