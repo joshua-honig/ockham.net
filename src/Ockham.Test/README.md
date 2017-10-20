@@ -1,6 +1,8 @@
 # Ockham.Test
-A small set of unit testing utilities. Ockham.Net uses Xunit for unit testing, including the unit tests of this 
-library, but the utilities themselves are framework agnostic and have no dependencies.
+A small set of framework-agnostic unit testing utilities. 
+
+> Ockham.Net uses Xunit for unit testing, including the unit tests of this 
+> library, but the utilities themselves are framework agnostic and have no dependencies.
   
 ## The Problem
 Every Ockham component should solve a clear problem that is not solved in the .Net BCL, or in the particular libraries it is meant to augment. 
@@ -12,7 +14,7 @@ All major .Net unit testing frameworks provide simple, semantic mechanisms for t
 of a particular type. They do not provide means of testing the contents of the exception message, or other 
 properties on the exception. The overloads of Ockham.Test.Assert.Throws provide mechanisms for doing one or both of these things.
 
-The point here is that the content of error messages and / or additional information attached to an exeption
+The point here is that the content of error messages and / or additional information attached to an exception
 represent testable requirements in and of themselves. Such requirements can be tested by hand:
 
 	[Test/Fact/TestMethod/etc.]

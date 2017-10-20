@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{5FFC0740-A51F-4664-838C-83C67D9A6E89}"
-	ProjectSection(SolutionItems) = preProject
-		..\LICENSE = ..\LICENSE
-	EndProjectSection
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ockham.Test.build", "build\Ockham.Test.build.shproj", "{C7BA562B-4742-4F88-BAC7-2CC0ECEF3F63}"
 EndProject

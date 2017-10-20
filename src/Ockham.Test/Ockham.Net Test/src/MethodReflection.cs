@@ -15,7 +15,18 @@ namespace Ockham.Test
         {
             return method.GetParameters().Select(p => p.ParameterType).ToArray();
         }
-
+         
+        private static bool ArraysEqual<T>(T[] a, T[] b)
+        {
+            if (a == null && b == null) return true;
+            if (a == null || b == null) return false;
+            if (a.Length != b.Length) return false;
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (!Object.ReferenceEquals(a[i], b[i]) && !Object.Equals(a[i], b[i])) return false;
+            }
+            return true;
+        }
 
         /// <summary>
         /// Find a method on the declaring type by matching the 
@@ -133,7 +144,7 @@ namespace Ockham.Test
 
             BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | (@static ? BindingFlags.Static : BindingFlags.Instance);
             var methodsFiltered = declaringType.GetMethods(flags).Where(
-                m => m.ReturnType == lmInvoke.ReturnType && Ockham.Test.Assert.ArraysEqual(paramTypes, GetParamTypes(m))
+                m => m.ReturnType == lmInvoke.ReturnType && MethodReflection.ArraysEqual(paramTypes, GetParamTypes(m))
             ).ToList();
             MethodInfo method = methodsFiltered.FirstOrDefault(m => m.Name == methodName);
             if (method == null && ignoreCase)

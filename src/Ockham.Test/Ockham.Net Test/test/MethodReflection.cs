@@ -6,7 +6,7 @@ using MR = Ockham.Test.MethodReflection;
 using XAssert = Xunit.Assert;
 
 namespace Ockham.Test.Test
-{ 
+{
     public class MethodReflection
     {
         delegate void ProtectedStatic();
@@ -30,7 +30,7 @@ namespace Ockham.Test.Test
         public class GetMethodInfo
         {
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodInfo:Find protected static methods by inferred name")]
             public void ProtectedStatic_InferredName()
             {
                 MethodInfo methodInfo = null;
@@ -44,7 +44,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(methodInfo);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodInfo:Find protected static methods by name")]
             public void ProtectedStatic_ExplicitName()
             {
                 MethodInfo methodInfo = null;
@@ -61,7 +61,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(methodInfo);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodInfo:Find private static methods by inferred name")]
             public void PrivateStatic_InferredName()
             {
                 MethodInfo methodInfo = null;
@@ -75,7 +75,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(methodInfo);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodInfo:Find private static methods by name")]
             public void PrivateStatic_ExplicitName()
             {
                 MethodInfo methodInfo = null;
@@ -92,7 +92,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(methodInfo);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodInfo:Find static methods with ref parameter")]
             public void ProtectedStatic_RefParam()
             {
                 // Signature with normal param should not match signature with ref param
@@ -106,7 +106,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(methodInfo);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodInfo:Find static methods with out parameter")]
             public void ProtectedStatic_OutParam()
             {
                 // Signature with out param should not match signature with ref param
@@ -116,7 +116,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(methodInfo);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodInfo:Find protected instance methods by inferred name")]
             public void ProtectedInstance_InferredName()
             {
                 MethodInfo methodInfo = null;
@@ -126,7 +126,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(methodInfo);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodInfo:Find protected instance methods by name")]
             public void ProtectedInstance_ExplicitName()
             {
                 MethodInfo methodInfo = null;
@@ -143,7 +143,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(methodInfo);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodInfo:Find private instance methods by inferred name")]
             public void PrivateInstance_InferredName()
             {
                 MethodInfo methodInfo = null;
@@ -153,7 +153,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(methodInfo);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodInfo:Find private instance methods by name")]
             public void PrivateInstance_ExplicitName()
             {
                 MethodInfo methodInfo = null;
@@ -176,7 +176,7 @@ namespace Ockham.Test.Test
 
             private const string THE_NAME = "The name";
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodCaller:Invoke protected static methods by inferred name")]
             public void ProtectedStatic_InferredName()
             {
                 ProtectedStatic dg = null;
@@ -190,7 +190,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(dg);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodCaller:Invoke protected static methods by name")]
             public void ProtectedStatic_ExplicitName()
             {
                 ProtectedStatic_string dg = null;
@@ -207,7 +207,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(dg);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodCaller:Invoke private static methods by inferred name")]
             public void PrivateStatic_InferredName()
             {
                 PrivateStatic dg = null;
@@ -223,7 +223,7 @@ namespace Ockham.Test.Test
                 XAssert.Equal(TestClass.StringConstant, dg());
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodCaller:Invoke private static methods by name")]
             public void PrivateStatic_ExplicitName()
             {
                 PrivateStatic_int dg = null;
@@ -243,7 +243,7 @@ namespace Ockham.Test.Test
                 XAssert.Equal(lConst3, dg(3));
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodCaller:Invoke static methods with ref parameter")]
             public void ProtectedStatic_RefParam()
             {
                 // Signature with normal param should not match signature with ref param
@@ -261,7 +261,7 @@ namespace Ockham.Test.Test
                 XAssert.Equal(42, val);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodCaller:Invoke static methods with out parameter")]
             public void ProtectedStatic_OutParam()
             {
                 // Signature with out param should not match signature with ref param
@@ -275,7 +275,7 @@ namespace Ockham.Test.Test
                 XAssert.Equal(42, val);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodCaller:Invoke protected instance methods by inferred name")]
             public void ProtectedInstance_InferredName()
             {
                 ProtectedInstance dg = null;
@@ -287,7 +287,7 @@ namespace Ockham.Test.Test
                 XAssert.Equal(THE_NAME, dg());
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodCaller:Invoke protected instance methods by name")]
             public void ProtectedInstance_ExplicitName()
             {
                 ProtectedInstance_int dg = null;
@@ -308,7 +308,7 @@ namespace Ockham.Test.Test
                 XAssert.Equal(lExpected, dg(3));
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodCaller:Invoke private instance methods by inferred name")]
             public void PrivateInstance_InferredName()
             {
                 PrivateInstance dg = null;
@@ -319,7 +319,7 @@ namespace Ockham.Test.Test
                 XAssert.NotNull(dg);
             }
 
-            [Fact]
+            [Fact(DisplayName = "MethodReflection.GetMethodCaller:Invoke private instance methods by name")]
             public void PrivateInstance_ExplicitName()
             {
                 PrivateInstance_int dg = null;
