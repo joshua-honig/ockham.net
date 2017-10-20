@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>1880b476-b190-4de5-878c-3af95858ae42</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Ockham.Data</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConvertOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Convert\Convert_Alias.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Convert\Convert_Core.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Convert\Convert_GenericOverloads.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Convert\Convert_Null.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Convert\Convert_SpecificTypes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reflection\TypeUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Convert\Generate_Convert_Aliases_CSharp.ps1" />
+  </ItemGroup>
+</Project>
