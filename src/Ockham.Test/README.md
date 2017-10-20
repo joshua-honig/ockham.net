@@ -17,46 +17,50 @@ properties on the exception. The overloads of Ockham.Test.Assert.Throws provide 
 The point here is that the content of error messages and / or additional information attached to an exception
 represent testable requirements in and of themselves. Such requirements can be tested by hand:
 
-	[Test/Fact/TestMethod/etc.]
-    public void ExceptionTest() 
-	{
-		bool exceptionWasThrown = false;
-		try 
-		{
-			/* do stuff */
-		} 
-		catch (ExpectedExceptionType ex) 
-		{
-			exceptionWasThrown = true;
+```C#
+[Test/Fact/TestMethod/etc.]
+public void ExceptionTest() 
+{
+    bool exceptionWasThrown = false;
+    try 
+    {
+        /* do stuff */
+    } 
+    catch (ExpectedExceptionType ex) 
+    {
+        exceptionWasThrown = true;
 
-			// TEST: Was the correct helpful exception message produced?
-			Assert.True(Regex.IsMatch(ex.Message, @"some pattern"));
+        // TEST: Was the correct helpful exception message produced?
+        Assert.True(Regex.IsMatch(ex.Message, @"some pattern"));
 
-			// TEST: Was the HelpfulProperty correctly set?
-			Assert.Equal("expected value", ex.HelpfulProperty)
-		}
+        // TEST: Was the HelpfulProperty correctly set?
+        Assert.Equal("expected value", ex.HelpfulProperty)
+    }
 
-		Assert.True(exceptionWasThrown); 
-	}
+    Assert.True(exceptionWasThrown); 
+}
+```
 
 Writing this more succinctly and semantically is helpful for the same reason that all the frameworks provide 
 a succinct way of testing for an expected exception by type
+ 
+```C#
+[Test/Fact/TestMethod/etc.]
+public void ExceptionTest() 
+{
+    // Simple test for message pattern is still just one line
+    Ockham.Test.Assert.Throws(() => /* do stuff */, @"some pattern");
 
-    [Test/Fact/TestMethod/etc.]
-    public void ExceptionTest() 
-	{
-		// Simple test for message pattern is still just one line
-		Ockham.Test.Assert.Throws(() => /* do stuff */, @"some pattern");
+    // So is a test for a single arbitrary assertion about the exception itself
+    Ockham.Test.Assert.Throws(() => /* do stuff */, ex => Assert.Equal("expected value", ex.HelpfulProperty));
 
-		// So is a test for a single arbitrary assertion about the exception itself
-		Ockham.Test.Assert.Throws(() => /* do stuff */, ex => Assert.Equal("expected value", ex.HelpfulProperty));
-
-		// It may be a matter of taste whether the following is more or less "readable" than the long form:
-		Ockham.Test.Assert.Throws(() => /* do stuff */, @"some pattern", ex => {
-			Assert.Equal("expected value", ex.HelpfulProperty);
-			Assert.NotNull(ex.ImportantData);
-		});
-	}
+    // It may be a matter of taste whether the following is more or less "readable" than the long form:
+    Ockham.Test.Assert.Throws(() => /* do stuff */, @"some pattern", ex => {
+        Assert.Equal("expected value", ex.HelpfulProperty);
+        Assert.NotNull(ex.ImportantData);
+    });
+}
+```
 
 ### 2. `MethodReflection`: Testing private and protected methods ###
 Yes, yes, in general you should not need to test private and protected methods. They are 
@@ -75,38 +79,40 @@ non-public methods by matching the signature against a strongly typed delegate. 
 know the details of the method you want to test. In fact, you can mostly copy and paste the signature of the 
 actual method into your test class, replace the access keyword with 'delegate', and you are good to go:
 
-    // In some useful class
-	public static class VeryUseful {
-		private static bool _Implementation(int someArg, string anotherArg, Dictionary<long, Thing> thingMap, out failureMessage) {
-			/* code ... */
-		}
+```C#
+// In some useful class
+public static class VeryUseful {
+    private static bool _Implementation(int someArg, string anotherArg, Dictionary<long, Thing> thingMap, out failureMessage) {
+        /* code ... */
+    }
 
-		protected string DoStuff(int someArg, string anotherArg, params Thing[] things) {
-			/* code ... */
-		}
-	}
+    protected string DoStuff(int someArg, string anotherArg, params Thing[] things) {
+        /* code ... */
+    }
+}
 
-	// In your test class
-	public class VeryUsefulTests {
-	
-		// Copied and pasted from VeryUseful.cs:
-		delegate bool _Implementation(int someArg, string anotherArg, Dictionary<long, Thing> thingMap, out failureMessage);
-		delegate bool ImplementationDelegate(int someArg, string anotherArg, Dictionary<long, Thing> thingMap, out failureMessage);
-		delegate string DoStuff(int someArg, string anotherArg, params Thing[] things);
+// In your test class
+public class VeryUsefulTests {
+    
+    // Copied and pasted from VeryUseful.cs:
+    delegate bool _Implementation(int someArg, string anotherArg, Dictionary<long, Thing> thingMap, out failureMessage);
+    delegate bool ImplementationDelegate(int someArg, string anotherArg, Dictionary<long, Thing> thingMap, out failureMessage);
+    delegate string DoStuff(int someArg, string anotherArg, params Thing[] things);
 
-		[Test/Fact/TestMethod/etc.]
-		public void Implementation_Case1() 
-		{
-			// If the name of the delegate type matches the target method, you don't need to provide the name
-			var _impl = Ockham.Test.MethodReflection.GetMethodCaller<_Implementation, VeryUseful>();
+    [Test/Fact/TestMethod/etc.]
+    public void Implementation_Case1() 
+    {
+        // If the name of the delegate type matches the target method, you don't need to provide the name
+        var _impl = Ockham.Test.MethodReflection.GetMethodCaller<_Implementation, VeryUseful>();
 
-			// But you can always specify the name explicitly
-			var impl2 = Ockham.Test.MethodReflection.GetMethodCaller<ImplementationDelegate, VeryUseful>("_Implementation");
+        // But you can always specify the name explicitly
+        var impl2 = Ockham.Test.MethodReflection.GetMethodCaller<ImplementationDelegate, VeryUseful>("_Implementation");
 
-			// Instance methods of course are also supported
-			var useful = new VeryUseful();
-			var doStuff = Ockham.Test.MethodReflection.GetMethodCaller<DoStuff, VeryUseful>(useful);
-		}
-	}
+        // Instance methods of course are also supported
+        var useful = new VeryUseful();
+        var doStuff = Ockham.Test.MethodReflection.GetMethodCaller<DoStuff, VeryUseful>(useful);
+    }
+}
+```
 
 The docs provide more complete examples.
