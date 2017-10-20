@@ -7,7 +7,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace Ockham.Test.Mocks
 {
 
+#if NETCOREAPP1_0
+#else
     [ExcludeFromCodeCoverage]
+#endif
     public class TestClass
     {
         public const string StringConstant = "String constant";

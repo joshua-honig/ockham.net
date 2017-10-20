@@ -123,11 +123,11 @@ namespace Ockham.Test.Test
             [Fact(DisplayName = "Assert.Throws:Reject wrong exception type")]
             public void RejectWrongExType()
             {
-                Action fnFailType = () => OAssert.Throws<StackOverflowException>(ThrowException, ExceptionExactPattern);
+                Action fnFailType = () => OAssert.Throws<DivideByZeroException>(ThrowException, ExceptionExactPattern);
 
                 XAssert.Throws<Exception>(fnFailType);
 
-                string expectedMessage = "Action threw exception of type " + typeof(MyArgumentException).Name + ", which does not inherit from expected exception type " + typeof(StackOverflowException).Name;
+                string expectedMessage = "Action threw exception of type " + typeof(MyArgumentException).Name + ", which does not inherit from expected exception type " + typeof(DivideByZeroException).Name;
                 try
                 {
                     fnFailType();
@@ -142,7 +142,7 @@ namespace Ockham.Test.Test
             [Fact(DisplayName = "Assert.Throws:Reject no exception thrown")]
             public void RejectNoException()
             {
-                Action fnFailNoException = () => OAssert.Throws<StackOverflowException>(() => { }, ExceptionExactPattern);
+                Action fnFailNoException = () => OAssert.Throws<DivideByZeroException>(() => { }, ExceptionExactPattern);
 
                 XAssert.Throws<Exception>(fnFailNoException);
 
