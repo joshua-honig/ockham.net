@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="C:\Source\Git\ockham.net\tools\BuildTools.psm1" Link="Scripts\BuildTools.psm1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="OpenCover" Version="4.6.519" />
+    <PackageReference Include="ReportGenerator" Version="3.0.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net45'"> 
@@ -22,8 +28,8 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0" />
   </ItemGroup>
   
-  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp1.0'">
-    <DefineConstants>NO_EXCLUDE_FROM_COVERAGE</DefineConstants>
+  <PropertyGroup Condition="'$(TargetFramework)'!='netcoreapp1.0'">
+    <DefineConstants>EXCLUDE_FROM_COVERAGE_ATTR</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
