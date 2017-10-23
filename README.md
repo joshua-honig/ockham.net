@@ -16,7 +16,7 @@ To solve frequent .Net needs in simple, standards-conformant ways
  
 ## Conventions
 
-- All Ockham modules will be built against the [MSBuild](https://github.com/Microsoft/MSBuild) version included in VS 2017 or later, or any compatible build engine, in order to use the greatly simplified project format and [succint multitargeting feature](https://blog.nuget.org/20170316/NuGet-now-fully-integrated-into-MSBuild.html).
+- All Ockham modules will be built against the [MSBuild](https://github.com/Microsoft/MSBuild) version included in VS 2017 or later, or any compatible build engine, in order to use the greatly simplified project format and [succint multitargeting feature](https://blog.nuget.org/20170316/NuGet-now-fully-integrated-into-MSBuild.html#develop-against-multiple-tfms).
 - Ockham modules each get their own repository, so that cloning and building is really, really easy (see Principles above)
  
 ## Modules
