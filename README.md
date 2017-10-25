@@ -8,11 +8,11 @@ To solve frequent .Net needs in simple, standards-conformant ways
 ## Principles
 
  - Every Ockham module should solve a clear problem that is not solved in the .Net BCL, or in the particular libraries it is meant to augment.
- - Every Ockham module shall support [.NET Framework](https://docs.microsoft.com/en-us/dotnet/framework/) 4.5+ and [.NET Standard](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) 1.3+. At the moment we are specifically compiling against .Net 4.5, [.NET Standard 1.3](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard1.3.md) and [.NET Standard 2.0](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md). Specific modules may target other specific versions where appropriate (such as .Net 4.6, .Net 4.7), but only in addition to support of net45, netstandard1.3 and netstandard2.0
- - Ockham modules will follow the same naming and general pattern conventions as established in the [dotnet/corefx](https://github.com/dotnet/corefx) project. Specifically, see [Coding Guidelines](https://github.com/dotnet/corefx/tree/master/Documentation#coding-guidelines)
- - Ockham modules will be fully unit tested with [Xunit](https://xunit.github.io/) before publishing release versions. All tests shall pass against netcoreapp1.0, netcoreapp2.0, net45, and any other specific framework versions targeted by the applicable module.
- - Cloning, building, and modifying Ockham modules will be really, really easy
  - **Ockham is not a framework**. Dependencies between Ockham modules shall be miminized.
+ - Every Ockham module shall support [.NET Framework](https://docs.microsoft.com/en-us/dotnet/framework/) 4.6+ and [.NET Standard](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) 2.0+. A module may support earlier framework or .NET Standard versions, but is not required to do so. At the moment we are specifically compiling against .Net 4.6 and [.NET Standard 2.0](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md) (net46 and netstandard2.0 target frameworks).  
+ - Ockham modules will follow the same naming and general pattern conventions as established in the [dotnet/corefx](https://github.com/dotnet/corefx) project. Specifically, see [Coding Guidelines](https://github.com/dotnet/corefx/tree/master/Documentation#coding-guidelines)
+ - Ockham modules will be fully unit tested with [Xunit](https://xunit.github.io/) before publishing release versions. All tests shall pass against net46, netcoreapp2.0, and any other specific framework versions targeted by the applicable module.
+ - Cloning, building, and modifying Ockham modules will be really, really easy
  
 ## Conventions
 
@@ -23,5 +23,6 @@ To solve frequent .Net needs in simple, standards-conformant ways
  
   |Module|GitHub Repository|Description|
   |------|-----------|---|
+  |**[Ockham.NuGet](https://github.com/joshua-honig/ockham.net.nuget)**|**[ockham.net.nuget](https://github.com/joshua-honig/ockham.net.nuget)**|An easy-to-use wrapper around the official [NuGet.Client](https://github.com/NuGet/NuGet.Client) packages|
   |**[Ockham.Data](https://github.com/joshua-honig/ockham.net.test)**|**[ockham.net.data](https://github.com/joshua-honig/ockham.net.data)**|Basic data conversion and type inspection utilities|
   |**[Ockham.Test](https://github.com/joshua-honig/ockham.net.test)**|**[ockham.net.test](https://github.com/joshua-honig/ockham.net.test)**|A small set of framework-agnostic unit testing utilities|
