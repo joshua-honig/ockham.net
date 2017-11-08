@@ -39,18 +39,29 @@ function Write-Banner {
 }
 
 function Invoke-Clean {
-    param([string]$ProjectDirectory)
+    param([string]$ProjectDirectory, [string]$Configuration, [switch]$Obj)
 
     if(!(Test-Path $ProjectDirectory)) { return }
 
-    if(Test-Path $ProjectDirectory) {
+    if([string]::IsNullOrEmpty($Configuration)) {
         if(Test-Path "$ProjectDirectory\bin") {
+            Write-Host "  Clearing $ProjectDirectory\bin"
             Remove-Item "$ProjectDirectory\bin" -Force -Recurse -ErrorAction SilentlyContinue
         }
-        if(Test-Path "$ProjectDirectory\obj") {
+        if($Obj -and (Test-Path "$ProjectDirectory\obj")) {
+            Write-Host "  Clearing $ProjectDirectory\obj"
             Remove-Item "$ProjectDirectory\obj" -Force -Recurse -ErrorAction SilentlyContinue
+        } 
+    } else {
+        if(Test-Path "$ProjectDirectory\bin\$Configuration") {
+            Write-Host "  Clearing $ProjectDirectory\bin\$Configuration"
+            Remove-Item "$ProjectDirectory\bin\$Configuration" -Force -Recurse -ErrorAction SilentlyContinue
         }
-    }
+        if($Obj -and (Test-Path "$ProjectDirectory\obj\$Configuration")) {
+            Write-Host "  Clearing $ProjectDirectory\obj\$Configuration"
+            Remove-Item "$ProjectDirectory\obj\$Configuration" -Force -Recurse -ErrorAction SilentlyContinue
+        } 
+    } 
 }
 
 function Invoke-Build {
@@ -58,11 +69,11 @@ function Invoke-Build {
     
     if(!(Test-Path $ProjectDirectory)) { return }
 
-    if($Clean) {
-        Invoke-Clean $ProjectDirectory
-    }
-
     if([string]::IsNullOrEmpty($Configuration)) { $Configuration = 'Release' }
+    
+    if($Clean) {
+        Invoke-Clean $ProjectDirectory -Configuration $Configuration
+    }
 
     $initialDir = Get-CurrentDirectory
     Set-CurrentDirectory $ProjectDirectory

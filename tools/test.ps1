@@ -1,4 +1,4 @@
-param([string]$ProjectDirectory, [string]$Configuration, [switch]$Unit, [switch]$API, [switch]$Build)
+param([string]$ProjectDirectory, [string]$Configuration, [switch]$Unit, [switch]$API, [switch]$Build, [switch]$Clean)
 
 if([string]::IsNullOrEmpty($ProjectDirectory)) {
     $ProjectDirectory = [System.IO.Directory]::GetCurrentDirectory()
@@ -8,6 +8,7 @@ if([string]::IsNullOrEmpty($Configuration)) {
     $Configuration = 'Release'
 }
 
+$startTime = [datetime]::Now
 $sw = [System.Diagnostics.Stopwatch]::StartNew()
 
 $toolsDir = $PSScriptRoot
@@ -29,14 +30,21 @@ Write-Host "    Source    : $srcDir"
 Write-Host "    Test      : $testDir"
 Write-Bar 
  
+if($Build -or $Clean) {
+    Write-Banner "Cleaning"
+    Invoke-Clean $refDir  -Configuration $Configuration
+    Invoke-Clean $srcDir  -Configuration $Configuration
+    Invoke-Clean $testDir -Configuration $Configuration
+}
+
 if($Build) {
     Write-Banner "Rebuilding"
     Set-CurrentDirectory $solutionDir    
     dotnet restore
 
-    Invoke-Build $refDir -Configuration $Configuration -Clean
-    Invoke-Build $srcDir -Configuration $Configuration -Clean
-    Invoke-Build $testDir -Configuration $Configuration -Clean
+    Invoke-Build $refDir  -Configuration $Configuration  
+    Invoke-Build $srcDir  -Configuration $Configuration  
+    Invoke-Build $testDir -Configuration $Configuration 
 }
   
  
@@ -63,8 +71,15 @@ if($Unit -or $API) {
     Remove-Item "$resultsDir\result.*" -Force -ErrorAction SilentlyContinue
 
     $fail = (@($results | ? { $_.Result -eq $false }).Count -gt 0)
-    $resultsName = $(if($fail) { 'failed' } else { 'passed' })
-    $outFile = "$resultsDir\result.$resultsName.htm"
+    $resultName = $(if($fail) { 'Failed' } else { 'Passed' })
+    $outFile = "$resultsDir\result.$($resultName.ToLower()).htm"
 
-    $results | ft > $outFile
+    $projectName = $(dir "$solutionDir\*.sln" | select -First 1).BaseName
+
+    "Project    : $projectName" > $outFile
+    "Result     : $resultName" >> $outFile
+    "Start Time : $($startTime.ToString('ddd yyyy-MM-dd HH:mm:ss'))" >> $outFile
+    "Elapsed    : $($sw.Elapsed.TotalSeconds.ToString('f3')) s" >> $outFile
+
+    $results | ft >> $outFile
 }
